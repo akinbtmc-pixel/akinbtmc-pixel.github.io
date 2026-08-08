@@ -114,6 +114,14 @@
       box-shadow: 0 0 18px rgba(96, 165, 250, 0.45);
     }
 
+    h1 {
+      margin: 0 0 24px;
+      font-size: clamp(2.1rem, 4vw, 3.25rem);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      color: #f8fafc;
+    }
+
     .line-list {
       list-style: none;
       padding: 0;
@@ -178,101 +186,91 @@
     }
 
     .footer {
-      margin-top: 24px;
+      margin-top: 28px;
       color: #94a3b8;
       font-size: 0.95rem;
       line-height: 1.6;
     }
 
     @media (max-width: 520px) {
-      .page {
-        padding: 24px 0;
-      }
-
-      .site-header,
-      .hero {
-        padding: 0 12px;
+      .card {
+        padding: 24px;
       }
     }
   </style>
 </head>
 <body>
-  <main class="page">
-    <header class="site-header">
-      <div class="site-brand">Target&RB</div>
-      <nav class="site-nav">
-        <a href="#request">Request</a>
-      </nav>
-    </header>
+<main class="page">
+  <header class="site-header">
+    <div class="site-brand">Target&RB</div>
+    <nav class="site-nav">
+      <a href="#request">Request</a>
+    </nav>
+  </header>
 
-    <section class="hero">
-      <p class="eyebrow">Request Website</p>
-      <h1 class="hero-title">Sende deine Anfrage an Target&RB</h1>
-      <p class="hero-copy">Fülle das Formular aus, damit deine Nachricht weitergeleitet wird. Verwende den Betreff als E-Mail-Titel und gib deine eigene E-Mail-Adresse ein.</p>
-    </section>
+  <section class="hero">
+    <p class="eyebrow">Request Website</p>
+    <h1 class="hero-title">Sende deine Anfrage an Target&RB</h1>
+    <p class="hero-copy">Fülle das Formular aus, damit deine Nachricht sicher an die gewünschte Adresse weitergeleitet wird. Nutze den Betreff als Titel der E-Mail und teile alle wichtigen Informationen in der Target Info mit.</p>
+  </section>
 
-    <section id="request" class="card">
-      <div class="eyebrow">Kontaktformular</div>
-      <form id="request-form" class="line-list">
-        <div class="line-item">
-          <label class="line-label" for="user-input">Betreff</label>
-          <input id="user-input" name="subject" class="line-field" type="text" placeholder="E-Mail-Betreff" required />
-        </div>
-        <div class="line-item">
-          <label class="line-label" for="reason-input-1">Target Reason</label>
-          <textarea id="reason-input-1" name="reason1" class="line-field" placeholder="Beschreibung" rows="2" required></textarea>
-        </div>
-        <div class="line-item">
-          <label class="line-label" for="email-input">Deine E-Mail</label>
-          <input id="email-input" name="senderEmail" class="line-field" type="email" placeholder="Deine E-Mail-Adresse" required />
-        </div>
-        <button type="submit" class="submit-button">Send</button>
-      </form>
-      <p class="footer" id="status-message"></p>
-    </section>
-  </main>
-  <script>
-    document.getElementById('request-form').addEventListener('submit', async function (event) {
-      event.preventDefault();
-      var recipient = ['cozyman.stuff', 'gmail.com'].join('@');
-      var subject = document.getElementById('user-input').value.trim();
-      var reason1 = document.getElementById('reason-input-1').value.trim();
-      var senderEmail = document.getElementById('email-input').value.trim();
-      var statusText = document.getElementById('status-message');
-
-      statusText.textContent = 'Sende Nachricht…';
-      statusText.style.color = '#cbd5e1';
-
-      try {
-        var response = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(recipient), {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            _subject: subject,
-            _replyto: senderEmail,
-            message: reason1,
-            email: senderEmail,
-            _captcha: 'false',
-            _template: 'table'
-          })
-        });
-        var result = await response.json();
-        if (response.ok && result.success) {
-          statusText.textContent = 'Deine Nachricht wurde gesendet.';
-          statusText.style.color = '#94f3c6';
-          document.getElementById('request-form').reset();
-        } else {
-          statusText.textContent = 'Fehler beim Senden: ' + (result.message || 'Senden fehlgeschlagen.');
-          statusText.style.color = '#fca5a5';
-        }
-      } catch (error) {
-        statusText.textContent = 'Fehler beim Senden: ' + (error.message || 'Bitte versuche es später noch einmal.');
+  <section id="request" class="card">
+    <div class="eyebrow">Kontaktformular</div>
+    <form id="request-form" class="line-list">
+      <div class="line-item">
+        <label class="line-label" for="user-input">Betreff</label>
+        <input id="user-input" name="subject" class="line-field" type="text" placeholder="E-Mail-Betreff" required />
+      </div>
+      <div class="line-item">
+        <label class="line-label" for="reason-input-1">Target Info</label>
+        <textarea id="reason-input-1" name="reason1" class="line-field" placeholder="Beschreibung" rows="2" required></textarea>
+      </div>
+      <button type="submit" class="submit-button">Send</button>
+    </form>
+  </section>
+</main>
+<script>
+  document.getElementById('request-form').addEventListener('submit', async function (event) {
+    event.preventDefault();
+    var recipient = ['cozyman.stuff', 'gmail.com'].join('@');
+    var subject = document.getElementById('user-input').value.trim();
+    var reason1 = document.getElementById('reason-input-1').value.trim();
+    var statusText = document.getElementById('status-message');
+    if (!statusText) {
+      statusText = document.createElement('p');
+      statusText.id = 'status-message';
+      statusText.className = 'footer';
+      document.querySelector('.card').appendChild(statusText);
+    }
+    statusText.textContent = 'Sende Nachricht…';
+    try {
+      var response = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(recipient), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: subject,
+          message: reason1,
+          _captcha: 'false',
+          _template: 'table'
+        })
+      });
+      var result = await response.json();
+      if (response.ok && result.success) {
+        statusText.textContent = 'Deine Nachricht wurde gesendet.';
+        statusText.style.color = '#94f3c6';
+        document.getElementById('request-form').reset();
+      } else {
+        statusText.textContent = 'Fehler beim Senden: ' + (result.message || 'Senden fehlgeschlagen.');
         statusText.style.color = '#fca5a5';
       }
-    });
-  </script>
+    } catch (error) {
+      statusText.textContent = 'Fehler beim Senden: ' + (error.message || 'Bitte versuche es später noch einmal.');
+      statusText.style.color = '#fca5a5';
+    }
+  });
+</script>
 </body>
 </html>
