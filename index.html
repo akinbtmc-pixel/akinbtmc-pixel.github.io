@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Target&RB</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: radial-gradient(circle at top left, rgba(96, 165, 250, 0.18), transparent 30%),
+                  radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.18), transparent 24%),
+                  linear-gradient(180deg, #020617 0%, #111827 100%);
+    }
+
+    .page {
+      width: min(1040px, 100%);
+      display: grid;
+      gap: 32px;
+      padding: 32px 0;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 0 18px;
+    }
+
+    .site-brand {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #f8fafc;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .site-nav a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .site-nav a:hover {
+      color: #f8fafc;
+    }
+
+    .hero {
+      padding: 0 18px;
+    }
+
+    .hero-title {
+      margin: 16px 0 12px;
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      line-height: 1.02;
+      color: #f8fafc;
+    }
+
+    .hero-copy {
+      max-width: 680px;
+      font-size: 1rem;
+      color: #cbd5e1;
+      line-height: 1.75;
+    }
+
+    .card {
+      width: min(560px, 100%);
+      padding: 32px;
+      border-radius: 28px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: 0 24px 90px rgba(15, 23, 42, 0.35);
+      backdrop-filter: blur(18px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #60a5fa;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 0.8rem;
+      height: 0.8rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #60a5fa, #a855f7);
+      box-shadow: 0 0 18px rgba(96, 165, 250, 0.45);
+    }
+
+    .line-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 16px;
+    }
+
+    .line-item {
+      padding: 22px 24px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      display: grid;
+      gap: 6px;
+    }
+
+    .line-label {
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+
+    .line-field {
+      width: 100%;
+      min-height: 44px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      background: rgba(15, 23, 42, 0.8);
+      color: #e2e8f0;
+      font-size: 1rem;
+      font-family: inherit;
+      resize: vertical;
+    }
+
+    .line-field:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.16);
+      border-color: #60a5fa;
+    }
+
+    .submit-button {
+      width: 100%;
+      padding: 16px 18px;
+      border: none;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #60a5fa, #a855f7);
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .submit-button:hover,
+    .submit-button:focus-visible {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+    }
+
+    .footer {
+      margin-top: 24px;
+      color: #94a3b8;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        padding: 24px 0;
+      }
+
+      .site-header,
+      .hero {
+        padding: 0 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="site-header">
+      <div class="site-brand">Target&RB</div>
+      <nav class="site-nav">
+        <a href="#request">Request</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">Request Website</p>
+      <h1 class="hero-title">Sende deine Anfrage an Target&RB</h1>
+      <p class="hero-copy">Fülle das Formular aus, damit deine Nachricht weitergeleitet wird. Verwende den Betreff als E-Mail-Titel und gib deine eigene E-Mail-Adresse ein.</p>
+    </section>
+
+    <section id="request" class="card">
+      <div class="eyebrow">Kontaktformular</div>
+      <form id="request-form" class="line-list">
+        <div class="line-item">
+          <label class="line-label" for="user-input">Betreff</label>
+          <input id="user-input" name="subject" class="line-field" type="text" placeholder="E-Mail-Betreff" required />
+        </div>
+        <div class="line-item">
+          <label class="line-label" for="reason-input-1">Target Reason</label>
+          <textarea id="reason-input-1" name="reason1" class="line-field" placeholder="Beschreibung" rows="2" required></textarea>
+        </div>
+        <div class="line-item">
+          <label class="line-label" for="email-input">Deine E-Mail</label>
+          <input id="email-input" name="senderEmail" class="line-field" type="email" placeholder="Deine E-Mail-Adresse" required />
+        </div>
+        <button type="submit" class="submit-button">Send</button>
+      </form>
+      <p class="footer" id="status-message"></p>
+    </section>
+  </main>
+  <script>
+    document.getElementById('request-form').addEventListener('submit', async function (event) {
+      event.preventDefault();
+      var recipient = ['cozyman.stuff', 'gmail.com'].join('@');
+      var subject = document.getElementById('user-input').value.trim();
+      var reason1 = document.getElementById('reason-input-1').value.trim();
+      var senderEmail = document.getElementById('email-input').value.trim();
+      var statusText = document.getElementById('status-message');
+
+      statusText.textContent = 'Sende Nachricht…';
+      statusText.style.color = '#cbd5e1';
+
+      try {
+        var response = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(recipient), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            _subject: subject,
+            _replyto: senderEmail,
+            message: reason1,
+            email: senderEmail,
+            _captcha: 'false',
+            _template: 'table'
+          })
+        });
+        var result = await response.json();
+        if (response.ok && result.success) {
+          statusText.textContent = 'Deine Nachricht wurde gesendet.';
+          statusText.style.color = '#94f3c6';
+          document.getElementById('request-form').reset();
+        } else {
+          statusText.textContent = 'Fehler beim Senden: ' + (result.message || 'Senden fehlgeschlagen.');
+          statusText.style.color = '#fca5a5';
+        }
+      } catch (error) {
+        statusText.textContent = 'Fehler beim Senden: ' + (error.message || 'Bitte versuche es später noch einmal.');
+        statusText.style.color = '#fca5a5';
+      }
+    });
+  </script>
+</body>
+</html>
